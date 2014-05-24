@@ -8,21 +8,16 @@ describe Robot do
 
 	describe "initial state" do
 
-
 		it "should only allow a valid PLACE" do
-			expect { @robot.move }.to be_false
-			expect { @robot.left }.to be_false
-			expect { @robot.right }.to be_false
+			@robot.report.should eq "-1,-1,NORTH"
 
-			@robot.report.to eq "-1,-1,NORTH"
-
-			@robot.place 0,1, "NORTH"
-			@robot.report.to eq "0,1,NORTH"
+			@robot.place(0,1, "NORTH").should be_true
+			@robot.report.should eq "0,1,NORTH"
 		end
 
 		it "should have a 5x5 board" do
-			@robot.board.height.eq 5
-			@robot.board.width.eq 5
+			expect(@robot.board.height).to eq 5
+			expect(@robot.board.width).to eq 5
 		end
 
 	end
@@ -33,25 +28,25 @@ describe Robot do
 			direction = "WEST"
 
 			# Off the west end
-			expect { @robot.place(-1, 0, direction) }.to be_false
+			@robot.place(-1, 0, direction).should be_false
 
 			# Off the east end
-			expect { @robot.place(5, 0, direction) }.to be_false
+			@robot.place(5, 0, direction).should be_false
 
 			# Off the north end
-			expect { @robot.place(0, 5, direction) }.to be_false
+			@robot.place(0, 5, direction).should be_false
 
 			# Off the south end
-			expect { @robot.place(0,  -1, direction) }.to be_false
+			@robot.place(0,  -1, direction).should be_false
 
-			@robot.report.to eq "-1,-1,NORTH"
+			@robot.report.should eq "-1,-1,NORTH"
 		end
 
 		it "should ignore invalid directions" do
 
-			expect { @robot.place 0,0, "HERP" }.to be_false
+			@robot.place(0,0, "HERP").should be_false
 
-			@robot.report.to eq "-1,-1,NORTH"
+			@robot.report.should eq "-1,-1,NORTH"
 		end
 	end
 
@@ -62,25 +57,25 @@ describe Robot do
 			it "should not move off the west border" do
 				@robot.place 0,0, "WEST"
 				@robot.move
-				@report.report.eq "0,0,WEST"
+				@robot.report.should eq "0,0,WEST"
 			end
 
 			it "should not move off the east border" do
 				@robot.place 4,0, "EAST"
 				@robot.move
-				@report.report.eq "0,0,EAST"
+				@robot.report.should eq "4,0,EAST"
 			end
 
 			it "should not move off the north border" do
 				@robot.place 0,4, "NORTH"
 				@robot.move
-				@report.report.eq "0,0,NORTH"
+				@robot.report.should eq "0,4,NORTH"
 			end
 
 			it "should not move off the south border" do
 				@robot.place 0,0, "SOUTH"
 				@robot.move
-				@report.report.eq "0,0,SOUTH"
+				@robot.report.should eq "0,0,SOUTH"
 			end
 		end
 
@@ -93,24 +88,24 @@ describe Robot do
 			it "should move WEST" do
 				@robot.left
 				@robot.move
-				@report.report.eq "0,1,WEST"
+				@robot.report.should eq "0,1,WEST"
 			end
 
 			it "should move EAST" do
 				@robot.right
 				@robot.move
-				@report.report.eq "2,1,EAST"
+				@robot.report.should eq "2,1,EAST"
 			end
 
 			it "should move NORTH" do
 				@robot.move
-				@report.report.eq "1,2,NORTH"
+				@robot.report.should eq "1,2,NORTH"
 			end
 
-			it "should not move off the south border" do
+			it "should move SOUTH" do
 				@robot.left.left
 				@robot.move
-				@report.report.eq "1,0,SOUTH"
+				@robot.report.should eq "1,0,SOUTH"
 			end
 		end
 
@@ -123,35 +118,35 @@ describe Robot do
 		end
 
 		it "should rotate clockwise" do
-			@robot.direction.current.should eq "NORTH"
+			@robot.direction.name.should eq "NORTH"
 
 			@robot.right
-			@robot.direction.current.should eq "EAST"
+			@robot.direction.name.should eq "EAST"
 
 			@robot.right
-			@robot.direction.current.should eq "SOUTH"
+			@robot.direction.name.should eq "SOUTH"
 
 			@robot.right
-			@robot.direction.current.should eq "WEST"
+			@robot.direction.name.should eq "WEST"
 
 			@robot.right
-			@robot.direction.current.should eq "NORTH"
+			@robot.direction.name.should eq "NORTH"
 		end
 
 		it "should rotate anti-clockwise" do
-			@robot.direction.current.should eq "NORTH"
+			@robot.direction.name.should eq "NORTH"
 
 			@robot.left
-			@robot.direction.current.should eq "WEST"
+			@robot.direction.name.should eq "WEST"
 
 			@robot.left
-			@robot.direction.current.should eq "SOUTH"
+			@robot.direction.name.should eq "SOUTH"
 
 			@robot.left
-			@robot.direction.current.should eq "EAST"
+			@robot.direction.name.should eq "EAST"
 
 			@robot.left
-			@robot.direction.current.should eq "NORTH"
+			@robot.direction.name.should eq "NORTH"
 		end
 	end
 end
