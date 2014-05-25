@@ -32,7 +32,7 @@ class Robot
 	##############################
 	# Methods
 
-
+	# Puts the robot on it's board
 	def place(x,y,direction)
 		return false if not @board.on?(x,y) or not self.rotate_to(direction.upcase)
 		@x = x
@@ -41,10 +41,13 @@ class Robot
 		return true
 	end
 
+	# Tells where the robot is on the board
 	def report
-		theReport = "#{@x},#{@y},#{self.direction}"
+		"#{@x},#{@y},#{self.direction}"
 	end
 
+	# Moves the robot in it's current direction
+	# Will be ignored it the robot is/will not on the board
 	def move
 		newX = self.direction.x + @x
 		newY = self.direction.y + @y
