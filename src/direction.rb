@@ -1,4 +1,4 @@
-# Basically a vector
+# Basically a normal vector with a name
 class Direction
 
 	def initialize(name, x, y)

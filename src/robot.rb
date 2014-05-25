@@ -2,6 +2,7 @@ require "direction"
 require "board"
 
 class Robot
+
 	def initialize
 		@directions = [
 			Direction.new("NORTH", 0, 1),
@@ -68,11 +69,15 @@ class Robot
 		end
 	end
 
+	# Rotates the robot 90° to the right
+	# Ignored if robot is not on the board
 	def right
 		@directions.rotate! if self.placed?
 		self
 	end
 
+	# Rotates the robot 90° to the left
+	# Ignored if robot is not on the board
 	def left
 		@directions.rotate! -1 if self.placed?
 		self
