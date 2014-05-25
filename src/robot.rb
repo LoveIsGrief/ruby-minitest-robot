@@ -69,14 +69,47 @@ class Robot
 	end
 
 	def right
-		@directions.rotate!
+		@directions.rotate! if self.placed?
 		self
 	end
 
 	def left
-		@directions.rotate! -1
+		@directions.rotate! -1 if self.placed?
 		self
 	end
 
+	###################################
+	# Input handling
+
+	# Returns the output of the given command
+	def handle_input(commandAndArgs)
+		command, args = commandAndArgs.split " "
+
+		case command
+		when "PLACE"
+			# Validations
+			return if not args
+
+			x,y,direction = args.split(",").each { |e| e.strip! }
+
+			begin
+				x = Integer(x)
+				y = Integer(y)
+				self.place x,y,direction
+			rescue ArgumentError => e
+
+			end
+		when "MOVE"
+			self.move
+		when "LEFT"
+			self.left
+		when "RIGHT"
+			self.right
+		when "REPORT"
+			self.report
+
+		end
+
+	end
 
 end
