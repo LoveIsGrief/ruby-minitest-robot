@@ -11,6 +11,9 @@ describe Robot do
 		it "should only allow a valid PLACE" do
 			@robot.report.should eq "-1,-1,NORTH"
 
+			@robot.move
+			@robot.report.should eq "-1,-1,NORTH"
+
 			@robot.place(0,1, "NORTH").should be_true
 			@robot.report.should eq "0,1,NORTH"
 		end
@@ -148,5 +151,53 @@ describe Robot do
 			@robot.left
 			@robot.direction.name.should eq "NORTH"
 		end
+	end
+
+	describe "input" do
+
+		it "should move north" do
+			@robot.handle_input "PLACE 0,0,NORTH"
+			@robot.handle_input "MOVE"
+			@robot.handle_input("REPORT").should eq "0,1,NORTH"
+		end
+
+		it "should rotate and face WEST" do
+			@robot.handle_input "PLACE 0,0,NORTH"
+			@robot.handle_input "LEFT"
+			@robot.handle_input("REPORT").should eq "0,0,WEST"
+		end
+
+		it "should move and rotate multiple times" do
+			@robot.handle_input "PLACE 1,2,EAST"
+			@robot.handle_input "MOVE"
+			@robot.handle_input "MOVE"
+			@robot.handle_input "LEFT"
+			@robot.handle_input "MOVE"
+			@robot.handle_input("REPORT").should eq "3,3,NORTH"
+		end
+
+		it "should discard invalid input" do
+			originalReport = "-1,-1,NORTH"
+
+			@robot.handle_input "NON-VALID COMMAND"
+			@robot.handle_input("REPORT").should eq originalReport
+
+			@robot.handle_input "MOVE"
+			@robot.handle_input("REPORT").should eq originalReport
+
+			@robot.handle_input "PLACE"
+			@robot.handle_input("REPORT").should eq originalReport
+
+			@robot.handle_input "PLACE l,1,NORTH"
+			@robot.handle_input("REPORT").should eq originalReport
+
+			@robot.handle_input "PLACE 1,l,NORTH"
+			@robot.handle_input("REPORT").should eq originalReport
+
+			@robot.handle_input "PLACE 1,1,HERP"
+			@robot.handle_input("REPORT").should eq originalReport
+
+		end
+
 	end
 end
