@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+# Import required classes
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "../src"))
+
+require "robot"
+
+# Handle user input and output string results
+robot = Robot.new
+while input = gets
+	if (output = robot.handle_input(input)).is_a? String
+		puts output
+	end
+end
