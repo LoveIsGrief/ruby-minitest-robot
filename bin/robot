@@ -5,10 +5,27 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "../src"))
 
 require "robot"
 
+puts "You have the commands:
+PLACE <x:int>,<y:int>,<direction:string>
+MOVE
+LEFT
+RIGHT
+REPORT
+
+First place the robot then MOVE it or rotate it 90° LEFT or RIGHT to move around the board.
+Finally REPORT its position to know where you are and which direction you face.
+
+Enter an empty line to quit
+
+(COMMANDS ARE CasE sEnSitiVE)
+"
+
 # Handle user input and output string results
 robot = Robot.new
-while input = gets
+putc ">"
+while input = gets and input.length > 1
 	if (output = robot.handle_input(input)).is_a? String
 		puts output
 	end
+	putc ">"
 end

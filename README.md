@@ -2,13 +2,33 @@
  Toy Robot Simulator
 =============================
 
-
-# Description
 The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.
 
 There are no other obstructions on the table surface.
 
 The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
+
+# Development
+
+## Executing
+
+Run `bin/robot`
+
+## Modifying and testing
+
+**Requirements**
+
+ [Ruby](https://www.ruby-lang.org/en/installation/) with
+ [RubyGem ](https://rubygems.org/pages/download) (in case not installed during the ruby install procedure)
+
+```sh
+gem install rubygems-bundler
+bundle install
+```
+
+**Dev and testing**
+
+Run `rspec` to manually run the tests or run `guard` for continuous testing every time you change a file.
 
 
 # Task
