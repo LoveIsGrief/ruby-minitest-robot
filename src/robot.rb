@@ -28,13 +28,17 @@ class Robot
 		@x != -1 and @y != -1
 	end
 
+	def on_board?(x,y)
+		return (x < @board.width and y < @board.height and x >= 0 and y >= 0)
+	end
+
 
 	##############################
 	# Methods
 
 	# Puts the robot on it's board
 	def place(x,y,direction)
-		return false if not @board.on?(x,y) or not self.rotate_to(direction.upcase)
+		return false if not self.on_board?(x,y) or not self.rotate_to(direction.upcase)
 		@x = x
 		@y = y
 
@@ -51,7 +55,7 @@ class Robot
 	def move
 		newX = self.direction.x + @x
 		newY = self.direction.y + @y
-		if self.placed? and  @board.on?(newX, newY)
+		if self.placed? and  self.on_board?(newX, newY)
 			@x = newX
 			@y = newY
 		end
